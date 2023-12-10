@@ -77,7 +77,7 @@ func (oa *OAuthService) GetAccessToken(ctx context.Context, opts ...*GetAccessTo
 	}
 
 	if oa.credential == nil {
-		return nil, fmt.Errorf("nil Credential")
+		return nil, ErrCredential
 	}
 	if err := oa.credential.Valid(); err != nil {
 		return nil, err
