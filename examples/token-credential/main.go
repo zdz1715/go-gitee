@@ -12,7 +12,8 @@ import (
 func main() {
 	// 直接设置token
 	credential := &gitee.TokenCredential{
-		Endpoint:    gitee.CloudEndpoint,
+		// default endpoint: https://gitee.com
+		//Endpoint:    gitee.CloudEndpoint,
 		AccessToken: "token",
 	}
 

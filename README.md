@@ -11,6 +11,7 @@ Gitee Go SDK
 ```shell
 go get -u github.com/zdz1715/go-gitee@latest
 ```
+
 ## Quick start
 ### OAuth授权码模式
 ```go
@@ -20,9 +21,10 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"os"
+
 	"github.com/zdz1715/ghttp"
 	"github.com/zdz1715/go-gitee"
-	"os"
 )
 
 func main() {
@@ -32,7 +34,8 @@ func main() {
 	clientSecret := "YourClientSecret"
 	redirectURI := "http://127.0.0.1"
 	credential := &gitee.OAuthCredential{
-		Endpoint:     gitee.CloudEndpoint,
+		// default endpoint: https://gitee.com
+		//Endpoint:    gitee.CloudEndpoint,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RedirectURI:  redirectURI,
@@ -90,6 +93,7 @@ func main() {
 	}
 
 }
+
 ```
 ### OAuth密码模式
 ```go
@@ -98,16 +102,18 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
+
 	"github.com/zdz1715/ghttp"
 	"github.com/zdz1715/go-gitee"
-	"os"
 )
 
 func main() {
 	// OAuth密码模式
 	// docs: https://gitee.com/api/v5/oauth_doc#/list-item-2
 	credential := &gitee.PasswordCredential{
-		Endpoint:     gitee.CloudEndpoint,
+		// default endpoint: https://gitee.com
+		//Endpoint:    gitee.CloudEndpoint,
 		ClientID:     "YourClientID",
 		ClientSecret: "YourClientSecret",
 		Username:     "YourUsername",
@@ -153,7 +159,8 @@ import (
 func main() {
 	// 直接设置token
 	credential := &gitee.TokenCredential{
-		Endpoint:    gitee.CloudEndpoint,
+		// default endpoint: https://gitee.com
+		//Endpoint:    gitee.CloudEndpoint,
 		AccessToken: "token",
 	}
 
@@ -176,6 +183,7 @@ func main() {
 	fmt.Printf("emails: %+v\n", emails)
 
 }
+
 
 ```
 

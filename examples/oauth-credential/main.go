@@ -17,7 +17,8 @@ func main() {
 	clientSecret := "YourClientSecret"
 	redirectURI := "http://127.0.0.1"
 	credential := &gitee.OAuthCredential{
-		Endpoint:     gitee.CloudEndpoint,
+		// default endpoint: https://gitee.com
+		//Endpoint:    gitee.CloudEndpoint,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RedirectURI:  redirectURI,

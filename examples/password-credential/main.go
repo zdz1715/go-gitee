@@ -13,7 +13,8 @@ func main() {
 	// OAuth密码模式
 	// docs: https://gitee.com/api/v5/oauth_doc#/list-item-2
 	credential := &gitee.PasswordCredential{
-		Endpoint:     gitee.CloudEndpoint,
+		// default endpoint: https://gitee.com
+		//Endpoint:    gitee.CloudEndpoint,
 		ClientID:     "YourClientID",
 		ClientSecret: "YourClientSecret",
 		Username:     "YourUsername",
