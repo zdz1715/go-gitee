@@ -8,10 +8,11 @@ import (
 
 var (
 	ErrCredential = errors.New("invalid credential")
+	ErrNilBody    = errors.New("nil body")
 )
 
 type Credential interface {
-	Body(opts *GetAccessTokenOptions) interface{}
+	Body(opts *GetAccessTokenOptions) any
 	GetEndpoint() string
 	GenerateCallOptions(token *AccessToken) (*ghttp.CallOptions, error)
 	Valid() error
@@ -26,7 +27,7 @@ func (t *TokenCredential) GetEndpoint() string {
 	return t.Endpoint
 }
 
-func (t *TokenCredential) Body(opts *GetAccessTokenOptions) interface{} {
+func (t *TokenCredential) Body(opts *GetAccessTokenOptions) any {
 	return nil
 }
 
@@ -59,7 +60,7 @@ func (p *PasswordCredential) GetEndpoint() string {
 	return p.Endpoint
 }
 
-func (p *PasswordCredential) Body(opts *GetAccessTokenOptions) interface{} {
+func (p *PasswordCredential) Body(opts *GetAccessTokenOptions) any {
 	return map[string]string{
 		"grant_type":    "password",
 		"username":      p.Username,
@@ -100,7 +101,7 @@ func (c *OAuthCredential) GetEndpoint() string {
 	return c.Endpoint
 }
 
-func (c *OAuthCredential) Body(opts *GetAccessTokenOptions) interface{} {
+func (c *OAuthCredential) Body(opts *GetAccessTokenOptions) any {
 	body := map[string]string{
 		"client_id":     c.ClientID,
 		"client_secret": c.ClientSecret,

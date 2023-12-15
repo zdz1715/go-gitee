@@ -90,9 +90,9 @@ func (c *Client) SetCredential(credential Credential) error {
 	return nil
 }
 
-func (c *Client) InvokeByCredential(ctx context.Context, method, path string, args interface{}, reply interface{}) error {
+func (c *Client) InvokeByCredential(ctx context.Context, method, path string, args any, reply any) error {
 	accessToken, err := c.OAuth.GetAccessToken(ctx)
-	if err != nil {
+	if err != nil && err != ErrNilBody {
 		return err
 	}
 
@@ -104,7 +104,7 @@ func (c *Client) InvokeByCredential(ctx context.Context, method, path string, ar
 	return c.Invoke(ctx, method, path, args, reply, callOpts)
 }
 
-func (c *Client) Invoke(ctx context.Context, method, path string, args interface{}, reply interface{}, opts ...*ghttp.CallOptions) error {
+func (c *Client) Invoke(ctx context.Context, method, path string, args any, reply any, opts ...*ghttp.CallOptions) error {
 	callOpts := new(ghttp.CallOptions)
 	if len(opts) > 0 && opts[0] != nil {
 		callOpts = opts[0]

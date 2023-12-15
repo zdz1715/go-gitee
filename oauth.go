@@ -86,7 +86,7 @@ func (oa *OAuthService) GetAccessToken(ctx context.Context, opts ...*GetAccessTo
 	body := oa.credential.Body(opt)
 
 	if body == nil {
-		return nil, nil
+		return nil, ErrNilBody
 	}
 
 	const apiEndpoint = "/oauth/token"
