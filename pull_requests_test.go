@@ -13,7 +13,7 @@ import (
 func TestPullRequestService_CreatePullRequest(t *testing.T) {
 	client, err := NewClient(testTokenCredential, &Options{
 		ClientOpts: []ghttp.ClientOption{
-			ghttp.WithDebug(true),
+			ghttp.WithDebug(ghttp.DefaultDebug),
 		},
 	})
 
@@ -36,7 +36,7 @@ func TestPullRequestService_CreatePullRequest(t *testing.T) {
 func TestPullRequestsService_AcceptPullRequest(t *testing.T) {
 	client, err := NewClient(testTokenCredential, &Options{
 		ClientOpts: []ghttp.ClientOption{
-			ghttp.WithDebug(true),
+			ghttp.WithDebug(ghttp.DefaultDebug),
 		},
 	})
 

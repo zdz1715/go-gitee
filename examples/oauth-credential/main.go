@@ -26,7 +26,7 @@ func main() {
 
 	client, err := gitee.NewClient(credential, &gitee.Options{
 		ClientOpts: []ghttp.ClientOption{
-			ghttp.WithDebug(true),
+			ghttp.WithDebug(ghttp.DefaultDebug),
 		},
 	})
 

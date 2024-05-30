@@ -13,8 +13,7 @@ type service struct {
 }
 
 type Options struct {
-	ClientOpts         []ghttp.ClientOption
-	InitSkipCredential bool
+	ClientOpts []ghttp.ClientOption
 }
 
 type Client struct {
@@ -41,15 +40,12 @@ func NewClient(credential Credential, opts *Options) (*Client, error) {
 		clientOptions = append(clientOptions, opts.ClientOpts...)
 	}
 	// 覆盖错误
-	clientOptions = append(clientOptions, ghttp.WithNot2xxError(&Error{}))
-
-	cc, err := ghttp.NewClient(context.Background(), clientOptions...)
-	if err != nil {
-		return nil, err
-	}
+	clientOptions = append(clientOptions, ghttp.WithNot2xxError(func() ghttp.Not2xxError {
+		return new(Error)
+	}))
 
 	c := &Client{
-		cc:   cc,
+		cc:   ghttp.NewClient(clientOptions...),
 		opts: opts,
 	}
 
@@ -59,12 +55,10 @@ func NewClient(credential Credential, opts *Options) (*Client, error) {
 	c.Email = (*EmailsService)(&c.common)
 	c.PullRequest = (*PullRequestsService)(&c.common)
 
-	if opts.InitSkipCredential {
-		return c, nil
-	}
-
-	if err = c.SetCredential(credential); err != nil {
-		return nil, err
+	if credential != nil {
+		if err := c.SetCredential(credential); err != nil {
+			return nil, err
+		}
 	}
 
 	return c, nil
@@ -79,9 +73,7 @@ func (c *Client) SetCredential(credential Credential) error {
 		return err
 	}
 
-	if err := c.cc.SetEndpoint(credential.GetEndpoint()); err != nil {
-		return err
-	}
+	c.cc.SetEndpoint(credential.GetEndpoint())
 
 	if c.OAuth != nil {
 		c.OAuth.credential = credential
